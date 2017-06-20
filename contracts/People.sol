@@ -1,3 +1,5 @@
+pragma solidity ^0.4.4;
+
 contract People {
 
   Person[] public people;
@@ -20,17 +22,19 @@ contract People {
   }
 
   function getPeople() constant returns (bytes32[], bytes32[], uint[]) {
+    uint length = people.length;
 
-    bytes32[] firstNames;
-    bytes32[] lastNames;
-    uint[] ages;
+    bytes32[] memory firstNames = new bytes32[](length);
+    bytes32[] memory lastNames = new bytes32[](length);
+    uint[] memory ages = new uint[](length);
 
-    for (uint i = 0; i < people.length; i++){
+    for (uint i = 0; i < length; i++){
       Person memory currentPerson; //wtf does memory do? call stack?
-      currentPerson = people[i]
-      firstNames.push(currentPerson.firstName)
-      lastNames.push(currentPerson.lastNames)
-      ages.push(currentPerson.ages)
+      currentPerson = people[i];
+
+      firstNames[i] = currentPerson.firstName;
+      lastNames[i] = currentPerson.lastName;
+      ages[i] = currentPerson.age;
     }
 
     return(firstNames, lastNames, ages);
